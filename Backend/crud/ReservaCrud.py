@@ -1,9 +1,10 @@
 # crud/reserva.py
+from sqlalchemy import and_, extract, or_
 from sqlalchemy.orm import Session
 from models.reserva import Reserva
 from schemas.Reservas import ReservaCreate
 from fastapi import HTTPException
-
+from sqlalchemy.sql import extract
 
 def get_reserva(db: Session):
     return db.query(Reserva).all()
@@ -15,19 +16,19 @@ def get_reserva_id(db: Session, reserva_id: int):
         raise HTTPException(status_code=404, detail="Reserva no encontrada")
     return reserva
 
+from sqlalchemy.sql import and_, or_, extract
+
 def create_reserva(db: Session, reserva: ReservaCreate):
-    existing_reserva = db.query(Reserva).filter(
-        Reserva.cancha_id == reserva.cancha_id,
-        Reserva.dia == reserva.dia
-    ).first()
-    
-    if existing_reserva:
+
+
+    if verificar_reserva(db, reserva):
         raise ValueError("Ya existe una reserva en esa cancha para ese horario.")
-    
-    # Crear la nueva reserva
+
+
     db_reserva = Reserva(
         cancha_id=reserva.cancha_id,
-        dia=reserva.dia,
+        fecha=reserva.fecha,
+        hora=reserva.hora,
         duracion=reserva.duracion,
         telefono=reserva.telefono,
         nombre_contacto=reserva.nombre_contacto
@@ -36,6 +37,7 @@ def create_reserva(db: Session, reserva: ReservaCreate):
     db.commit()
     db.refresh(db_reserva)
     return db_reserva
+
 
 def delete_reserva(db: Session, reserva_id: int):
     reserva = db.query(Reserva).filter(Reserva.id == reserva_id).first()
@@ -47,12 +49,9 @@ def delete_reserva(db: Session, reserva_id: int):
 
 
 def modify_reserva(db: Session, reserva_id: int, reserva_data: ReservaCreate):
-    existing_reserva = db.query(Reserva).filter(
-        Reserva.cancha_id == reserva.cancha_id,
-        Reserva.dia == reserva.dia
-    ).first()
     
-    if existing_reserva:
+    
+    if verificar_reserva(db, reserva_data):
         raise ValueError("Ya existe una reserva en esa cancha para ese horario.")
     
     reserva = db.query(Reserva).filter(Reserva.id == reserva_id).first()
@@ -69,4 +68,24 @@ def modify_reserva(db: Session, reserva_id: int, reserva_data: ReservaCreate):
     db.commit()
     db.refresh(reserva) 
     return reserva
+
+
+def verificar_reserva(db: Session, reserva: ReservaCreate):
+    inicio_minutos = reserva.hora.hour * 60 + reserva.hora.minute
+    fin_minutos = inicio_minutos + reserva.duracion * 60
+
+    existing_reserva = db.query(Reserva).filter(
+        Reserva.cancha_id == reserva.cancha_id,
+        Reserva.fecha == reserva.fecha,
+        or_(
+            and_(
+                (extract('hour', Reserva.hora) * 60 + extract('minute', Reserva.hora)) < fin_minutos,
+                (extract('hour', Reserva.hora) * 60 + extract('minute', Reserva.hora) + Reserva.duracion * 60) > inicio_minutos
+            )
+        )
+    ).first()
+
+    return existing_reserva
+
+    
     

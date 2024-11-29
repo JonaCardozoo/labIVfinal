@@ -1,8 +1,9 @@
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import date,time
 
 class ReservaBase(BaseModel):
-    dia: datetime
+    fecha:date
+    hora:time
     duracion: int
     telefono: str
     nombre_contacto: str
