@@ -2,6 +2,17 @@
 from sqlalchemy.orm import Session
 from models.canchas import Cancha  
 from schemas.Canchas import CanchaCreate  
+from fastapi import HTTPException
+
+
+def get_cancha(db:Session):
+    return db.query(Cancha).all()
+
+def get_cancha_id(db:Session, cancha_id:int):
+    cancha = db.query(Cancha).filter(Cancha.id == cancha_id).first()
+    if not cancha:
+        raise HTTPException(status_code=404, detail="Cancha no encontrada")
+    return cancha
 
 def create_cancha(db: Session, cancha: CanchaCreate):
     db_cancha = Cancha(

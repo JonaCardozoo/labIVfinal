@@ -4,6 +4,17 @@ from models.reserva import Reserva
 from schemas.Reservas import ReservaCreate
 from fastapi import HTTPException
 
+
+def get_reserva(db: Session):
+    return db.query(Reserva).all()
+    
+
+def get_reserva_id(db: Session, reserva_id: int):
+    reserva = db.query(Reserva).filter(Reserva.id == reserva_id).first()
+    if not reserva:
+        raise HTTPException(status_code=404, detail="Reserva no encontrada")
+    return reserva
+
 def create_reserva(db: Session, reserva: ReservaCreate):
     existing_reserva = db.query(Reserva).filter(
         Reserva.cancha_id == reserva.cancha_id,

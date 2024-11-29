@@ -11,5 +11,5 @@ class Reserva(Base):
     telefono = Column(String, nullable=False)
     nombre_contacto = Column(String, nullable=False)
     cancha_id = Column(Integer, ForeignKey('canchas.id'), nullable=False)
-
+    
     cancha = relationship("Cancha", back_populates="reservas")
