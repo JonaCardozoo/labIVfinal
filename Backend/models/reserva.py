@@ -8,7 +8,8 @@ class Reserva(Base):
     id = Column(Integer, primary_key=True, index=True)
     dia = Column(Date, nullable=False)
     duracion = Column(Time, nullable=False)
-    contacto = Column(String, nullable=False)
+    telefono = Column(String, nullable=False)
+    nombre_contacto = Column(String, nullable=False)
     cancha_id = Column(Integer, ForeignKey('canchas.id'), nullable=False)
 
     cancha = relationship("Cancha", back_populates="reservas")

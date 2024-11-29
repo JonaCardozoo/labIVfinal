@@ -4,7 +4,7 @@ from datetime import datetime
 class ReservaBase(BaseModel):
     dia: datetime
     duracion: int
-    contacto: str
+    telefono: str
     nombre_contacto: str
     cancha_id: int
 class ReservaCreate(ReservaBase):
