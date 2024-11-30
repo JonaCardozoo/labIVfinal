@@ -1,9 +1,8 @@
-// AgregarReserva.js
-
 import { useState } from "react";
 import axios from "axios";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { Field } from "./components/ui/field";
+
 
 function AgregarReserva({ setReservas, setMostrarFormulario }) {
     const [nuevaReserva, setNuevaReserva] = useState({
@@ -16,14 +15,18 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
     });
     const [error, setError] = useState(null);
 
+    // Cuando cambia un campo, actualiza el estado de la reserva
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNuevaReserva((prev) => ({
+            // Copia el objeto anterior
             ...prev,
+            // Asigna el valor al campo actualizado
             [name]: value,
         }));
     };
 
+    // Cuando se hace click en el botón Agregar Reserva, se envia la reserva a la API
     const handleAgregarReserva = () => {
         if (!nuevaReserva.fecha || !nuevaReserva.hora || !nuevaReserva.telefono || !nuevaReserva.nombre_contacto || !nuevaReserva.cancha_id) {
             setError("Todos los campos son obligatorios.");

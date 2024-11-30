@@ -1,5 +1,3 @@
-// Reservas.js
-
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Text, Button, Flex, Table } from "@chakra-ui/react";
