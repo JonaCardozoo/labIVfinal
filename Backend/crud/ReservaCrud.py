@@ -36,7 +36,17 @@ def create_reserva(db: Session, reserva: ReservaCreate):
     db.add(db_reserva)
     db.commit()
     db.refresh(db_reserva)
-    return db_reserva
+
+    formatted_reserva = {
+        "id": db_reserva.id,
+        "cancha_id": db_reserva.cancha_id,
+        "fecha": db_reserva.fecha.strftime("%Y-%m-%d"),
+        "hora": db_reserva.hora.strftime("%H:%M"),
+        "duracion": db_reserva.duracion,
+        "telefono": db_reserva.telefono,
+        "nombre_contacto": db_reserva.nombre_contacto
+    }
+    return formatted_reserva 
 
 
 def delete_reserva(db: Session, reserva_id: int):
