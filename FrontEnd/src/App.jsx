@@ -1,11 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
-import Canchas from "./Canchas";
+import Canchas from "./Canchas/Canchas";
 import Navbar from "./NavBar";
-import Reservas from "./Reservas";
-import AgregarReserva from "./AgregarReserva";
-
+import Reservas from "./Reservas/Reservas";
 function App() {
   return (
     <Router>
@@ -14,7 +12,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/canchas" element={<Canchas />} />
         <Route path="/reservas" element={<Reservas />} />
-
       </Routes>
     </Router>
 

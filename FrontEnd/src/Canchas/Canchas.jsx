@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { Text } from "@chakra-ui/react"
 import { Table } from "@chakra-ui/react"
 import { Button, Flex } from "@chakra-ui/react"
+import AgregarCancha from "./AgregarCancha";
 
 function Canchas() {
     const [canchas, setCanchas] = useState([]);
-
+    const [mostrarFormularioAgregar, setMostrarFormularioAgregar] = useState(false);
     useEffect(() => {
         axios
             .get("http://localhost:8000/canchas")
@@ -27,7 +28,6 @@ function Canchas() {
                         <Table.Row>
                             <Table.ColumnHeader>Nombre</Table.ColumnHeader>
                             <Table.ColumnHeader>techada</Table.ColumnHeader>
-                            <Table.ColumnHeader>Acciones</Table.ColumnHeader>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -36,12 +36,18 @@ function Canchas() {
                                 <Table.Cell>{canchas.nombre}</Table.Cell>
                                 <Table.Cell>{canchas.techada ? "Es techada" : "No es techada"}</Table.Cell>
                                 <Table.Cell>
-                                    <Button>Reservar</Button>
                                 </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
                 </Table.Root>
+                <Flex direction={"row"} justifyContent={"center"} align="center" m={10} gap={5}>
+
+                    <Button onClick={() => setMostrarFormularioAgregar(!mostrarFormularioAgregar)}>
+                        {mostrarFormularioAgregar ? "Cancelar" : "Agregar Cancha"}
+                    </Button>
+                    {mostrarFormularioAgregar && <AgregarCancha setCanchas={setCanchas} setMostrarFormularioAgregar={setMostrarFormularioAgregar} />}
+                </Flex>
             </Flex>
         </div>
     );

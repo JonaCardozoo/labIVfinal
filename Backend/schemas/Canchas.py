@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class CanchaBase(BaseModel):
+    id: int
     nombre: str
     techada: bool
 

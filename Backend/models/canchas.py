@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 class Cancha(Base):
     __tablename__ = "canchas"
     
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=False)
     nombre = Column(String, unique=True, index=True)
     techada = Column(Boolean, default=False)  
 

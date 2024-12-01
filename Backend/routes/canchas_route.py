@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.db.session import SessionLocal
 from crud.CanchasCrud import create_cancha
 from schemas.Canchas import CanchaCreate, Cancha
-from crud.CanchasCrud import get_cancha,get_cancha_id
+from crud.CanchasCrud import get_cancha,get_cancha_id,delete_cancha
 
 router = APIRouter()
 
@@ -23,5 +23,13 @@ def read_cancha_route(cancha_id: int, db: Session = Depends(get_db)):
     return get_cancha_id(db, cancha_id)
 
 @router.post("/canchas/", response_model=Cancha)
-def create_cancha_route(reserva: CanchaCreate, db: Session = Depends(get_db)):
-    return create_cancha(db, reserva)
+def create_cancha_route(canchas: CanchaCreate, db: Session = Depends(get_db)):
+    return create_cancha(db, canchas)
+
+
+router.delete("/canchas/{cancha_id}", response_model=Cancha)
+def delete_cancha_route(cancha_id: int, db: Session = Depends(get_db)):
+    return delete_cancha(db, cancha_id)
+
+
+

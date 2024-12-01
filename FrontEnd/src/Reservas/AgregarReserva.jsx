@@ -1,8 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
-import { Field } from "./components/ui/field";
-
+import { Field } from "../components/ui/field";
 
 function AgregarReserva({ setReservas, setMostrarFormulario }) {
     const [nuevaReserva, setNuevaReserva] = useState({
@@ -19,9 +18,7 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNuevaReserva((prev) => ({
-            // Copia el objeto anterior
             ...prev,
-            // Asigna el valor al campo actualizado
             [name]: value,
         }));
     };
@@ -35,6 +32,7 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
         axios
             .post("http://localhost:8000/reservas", nuevaReserva)
             .then((response) => {
+                // Actualizar el estado de reservas para agregar la nueva reserva
                 setReservas((prev) => [...prev, response.data]);
                 setMostrarFormulario(false);
                 setNuevaReserva({
@@ -50,8 +48,7 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
             .catch((error) => {
                 if (error.response && error.response.status === 500) {
                     setError("Ya existe una reserva en esa cancha para ese horario.");
-                }
-                else {
+                } else {
                     setError("Hubo un error al agregar la reserva.");
                 }
             });

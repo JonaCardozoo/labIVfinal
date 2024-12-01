@@ -16,6 +16,7 @@ def get_cancha_id(db:Session, cancha_id:int):
 
 def create_cancha(db: Session, cancha: CanchaCreate):
     db_cancha = Cancha(
+        id=cancha.id,
         nombre=cancha.nombre,
         techada=cancha.techada
     )
@@ -25,3 +26,13 @@ def create_cancha(db: Session, cancha: CanchaCreate):
     db.refresh(db_cancha)
     
     return db_cancha
+
+
+
+def delete_cancha(db: Session, cancha_id: int):
+    cancha = db.query(Cancha).filter(Cancha.id == cancha_id).first()
+    if not cancha:
+        raise HTTPException(status_code=404, detail="Cancha no encontrada")
+    db.delete(cancha)
+    db.commit()
+    return cancha
