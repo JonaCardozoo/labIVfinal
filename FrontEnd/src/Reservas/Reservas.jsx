@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import { Text, Button, Flex, Table } from "@chakra-ui/react";
 import AgregarReserva from "./AgregarReserva";
 import ModificarReserva from "./ModificarReserva";
+import BorrarReserva from "./BorrarReserva";
 
 
 function Reservas() {
     const [reservas, setReservas] = useState([]);
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [mostrarFormularioModificar, setMostrarFormularioModificar] = useState(false);
+    const [mostrarFormularioBorrar, setMostrarFormularioBorrar] = useState(false);
 
     useEffect(() => {
         axios
@@ -56,7 +58,7 @@ function Reservas() {
                 </Table.Root>
 
                 <Flex direction="row" align="center" mt={5} gap={5}>
-                    {/* Ya no necesitas el Link aquí */}
+
                     <Button onClick={() => setMostrarFormulario(!mostrarFormulario)}>
                         {mostrarFormulario ? "Cancelar" : "Agregar Reserva"}
                     </Button>
@@ -65,7 +67,12 @@ function Reservas() {
                         {mostrarFormularioModificar ? "Cancelar" : "Modificar Reserva"}
                     </Button>
 
+                    <Button onClick={() => setMostrarFormularioBorrar(!mostrarFormularioBorrar)}>
+                        {mostrarFormularioBorrar ? "Cancelar" : "Borrar Reserva"}
+                    </Button>
+
                 </Flex>
+                {mostrarFormularioBorrar && <BorrarReserva setReservas={setReservas} setMostrarFormularioModificar={setMostrarFormularioModificar} />}
                 {mostrarFormularioModificar && <ModificarReserva setReservas={setReservas} setMostrarFormularioModificar={setMostrarFormularioModificar} />}
                 {mostrarFormulario && <AgregarReserva setReservas={setReservas} setMostrarFormulario={setMostrarFormulario} />}
             </Flex>

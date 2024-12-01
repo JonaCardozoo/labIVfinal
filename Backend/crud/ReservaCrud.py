@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from models.reserva import Reserva
 from schemas.Reservas import ReservaCreate
 from fastapi import HTTPException
-from sqlalchemy.sql import extract
 
 def get_reserva(db: Session):
     return db.query(Reserva).all()
@@ -15,8 +14,6 @@ def get_reserva_id(db: Session, reserva_id: int):
     if not reserva:
         raise HTTPException(status_code=404, detail="Reserva no encontrada")
     return reserva
-
-from sqlalchemy.sql import and_, or_, extract
 
 def create_reserva(db: Session, reserva: ReservaCreate):
 
