@@ -23,7 +23,7 @@ function Canchas() {
         <div>
             <Flex direction={"column"} justifyContent={"center"} align="center" >
                 <Text textStyle={"6xl"} textAlign={"center"} m={10}>Canchas</Text>
-                <Table.Root size="sm" width={"30%"}  >
+                <Table.Root size="sm" height={100} width={"15%"}>
                     <Table.Header>
                         <Table.Row>
                             <Table.ColumnHeader>Nombre</Table.ColumnHeader>
@@ -46,7 +46,7 @@ function Canchas() {
                     <Button onClick={() => setMostrarFormularioAgregar(!mostrarFormularioAgregar)}>
                         {mostrarFormularioAgregar ? "Cancelar" : "Agregar Cancha"}
                     </Button>
-                    {mostrarFormularioAgregar && <AgregarCancha setCanchas={setCanchas} setMostrarFormularioAgregar={setMostrarFormularioAgregar} />}
+                    {mostrarFormularioAgregar && <AgregarCancha setCanchas={setCanchas} setMostrarFormulario={setMostrarFormularioAgregar} />}
                 </Flex>
             </Flex>
         </div>

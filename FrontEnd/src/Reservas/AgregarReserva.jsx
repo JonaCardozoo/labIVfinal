@@ -23,7 +23,6 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
         }));
     };
 
-    // Cuando se hace click en el botón Agregar Reserva, se envia la reserva a la API
     const handleAgregarReserva = () => {
         if (!nuevaReserva.fecha || !nuevaReserva.hora || !nuevaReserva.telefono || !nuevaReserva.nombre_contacto || !nuevaReserva.cancha_id) {
             setError("Todos los campos son obligatorios.");

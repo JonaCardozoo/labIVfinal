@@ -41,12 +41,20 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
                 setError(null);
             })
             .catch((error) => {
-                if (error.response && error.response.status === 500) {
-                    setError("Ya existe una cancha con ese nombre.");
+                console.error("Error al agregar cancha:", error); // Imprime el error completo en la consola
+
+                if (error.response) {
+                    console.log("Datos de respuesta del error:", error.response.data);
+                    if (error.response.status === 500) {
+                        setError("Ya existe una cancha con ese nombre.");
+                    } else {
+                        setError(`Error: ${error.response.data.message || "No se pudo agregar la cancha."}`);
+                    }
                 } else {
                     setError("Hubo un error al agregar la cancha.");
                 }
             });
+
     };
 
     return (
