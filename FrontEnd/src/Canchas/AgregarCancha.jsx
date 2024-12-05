@@ -32,11 +32,7 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
             return;
         }
 
-        toaster.success({
-            title: "Cancha agregada",
-            status: "success",
-            duration: 3000,
-        })
+
 
 
         axios
@@ -49,6 +45,11 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
                     techada: null,
                 });
 
+                toaster.success({
+                    title: "Cancha agregada",
+                    status: "success",
+                    duration: 3000,
+                })
                 setError(null);
             })
             .catch((error) => {
@@ -62,8 +63,14 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
                         setError(`Error: ${error.response.data.message || "No se pudo agregar la cancha."}`);
                     }
                 } else {
-                    setError("Hubo un error al agregar la cancha.");
+                    toaster.error({
+                        title: "Hubo un error al agregar la cancha.",
+                        status: "error",
+                        duration: 3000,
+                    })
                 }
+
+
             });
 
     };
@@ -103,14 +110,14 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
             <Flex direction="row" gap={5} mt={4}>
                 <Checkbox
                     label="Es techada"
-                    isChecked={nuevaCancha.techada === true}
+                    checked={nuevaCancha.techada === true}
                     onChange={() => handleCheckboxChange(true)}
                 >
                     Es techada
                 </Checkbox>
                 <Checkbox
                     label="No es techada"
-                    isChecked={nuevaCancha.techada === false}
+                    checked={nuevaCancha.techada === false}
                     onChange={() => handleCheckboxChange(false)}
                 >
                     No es techada

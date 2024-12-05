@@ -15,11 +15,18 @@ def get_cancha_id(db:Session, cancha_id:int):
     return cancha
 
 def create_cancha(db: Session, cancha: CanchaCreate):
+
+    if(verificar_cancha(db, cancha)):
+        raise ValueError("Ya existe una cancha con ese nombre.", detail="Ya existe una cancha con ese nombre")
+
     db_cancha = Cancha(
         id=cancha.id,
         nombre=cancha.nombre,
         techada=cancha.techada
     )
+
+    if(db_cancha.nombre == "" or db_cancha.techada == None):
+        raise ValueError("Todos los campos son obligatorios.", detail="Nombre o Techada no pueden ser vacíos")
     
     db.add(db_cancha)
     db.commit()
@@ -36,3 +43,13 @@ def delete_cancha(db: Session, cancha_id: int):
     db.delete(cancha)
     db.commit()
     return cancha
+
+
+def verificar_cancha(db: Session, cancha: CanchaCreate):
+
+    existing_cancha = db.query(Cancha).filter(
+        Cancha.id == cancha.id,
+        Cancha.nombre == cancha.nombre,
+
+    ).first()
+    return existing_cancha

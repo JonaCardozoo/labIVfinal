@@ -31,6 +31,7 @@ function Reservas() {
             });
     }, []);
 
+
     const handleBuscarPorFechaYCancha = () => {
         const reservasFiltradas = reservasOriginales.filter((reserva) => {
             const coincideFecha = !fechaBusqueda || reserva.fecha === fechaBusqueda;

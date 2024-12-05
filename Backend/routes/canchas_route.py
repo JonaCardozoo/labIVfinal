@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException,status
 from sqlalchemy.orm import Session
 from app.db.session import SessionLocal
-from crud.CanchasCrud import create_cancha
+from crud.CanchasCrud import create_cancha, verificar_cancha
 from schemas.Canchas import CanchaCreate, Cancha
 from crud.CanchasCrud import get_cancha,get_cancha_id,delete_cancha
 
@@ -22,9 +22,31 @@ def read_canchas_route(db: Session = Depends(get_db)):
 def read_cancha_route(cancha_id: int, db: Session = Depends(get_db)):
     return get_cancha_id(db, cancha_id)
 
-@router.post("/canchas/", response_model=Cancha)
+@router.post("/canchas/")
 def create_cancha_route(canchas: CanchaCreate, db: Session = Depends(get_db)):
-    return create_cancha(db, canchas)
+    try:
+        existing_cancha = verificar_cancha(db, canchas)
+        
+        if existing_cancha:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Ya existe una cancha con ese nombre."
+            )
+        
+        new_cancha = create_cancha(db, canchas)
+        return {"message": "Cancha creada exitosamente", "cancha": new_cancha}
+    
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    
+    except Exception as e:    
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Hubo un error al agregar la cancha."
+        )
 
 
 router.delete("/canchas/{cancha_id}", response_model=Cancha)

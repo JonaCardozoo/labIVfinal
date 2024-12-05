@@ -14,13 +14,17 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
         telefono: "",
         nombre_contacto: "",
     });
-    const [error, setError] = useState(null);
+    const [error] = useState(null);
 
     const handleModificarReserva = () => {
         const { reserva_id, cancha_id, fecha, duracion, telefono, nombre_contacto } = modificarReserva;
 
         if (!reserva_id || !cancha_id || !fecha || !duracion || !telefono || !nombre_contacto) {
-            setError("Todos los campos son obligatorios.");
+            toaster.error({
+                title: "Todos los campos son obligatorios.",
+                status: "error",
+                duration: 3000,
+            });
             return;
         }
 
@@ -41,7 +45,6 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
                     )
                 );
                 setMostrarFormularioModificar(false);
-                setError(null);
             })
             .catch((error) => {
                 if (error.response && error.response.status === 500) {
@@ -65,12 +68,15 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
             duration: 3000,
         });
 
-        cancha_id = "";
-        fecha = "";
-        hora = "";
-        duracion = 0;
-        telefono = "";
-        nombre_contacto = "";
+        setReservas({
+            reserva_id: 0,
+            cancha_id: 0,
+            fecha: "",
+            hora: "",
+            duracion: 0,
+            telefono: "",
+            nombre_contacto: "",
+        });
     };
 
     return (
@@ -198,9 +204,6 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
             <Flex justifyContent="center" mt={4}>
                 <Button colorScheme="blue" onClick={handleModificarReserva}>
                     Guardar Cambios
-                </Button>
-                <Button ml={4} onClick={() => setMostrarFormularioModificar(false)}>
-                    Cancelar
                 </Button>
             </Flex>
         </div>

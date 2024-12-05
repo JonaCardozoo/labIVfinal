@@ -10,10 +10,9 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permite todos los orígenes, o puedes especificar dominios específicos
-    allow_credentials=True,
-    allow_methods=["*"],  # Permite todos los métodos HTTP (GET, POST, etc.)
-    allow_headers=["*"],  # Permite todos los encabezados
+    allow_origins=["*"],  allow_credentials=True,
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
 
@@ -24,7 +23,7 @@ app.add_event_handler("startup", startup)
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Binvenidos a la API de Reservas"}
 
 app.include_router(reservas_router)
 app.include_router(canchas_router)

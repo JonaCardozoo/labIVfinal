@@ -13,7 +13,7 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
         nombre_contacto: "",
         cancha_id: ""
     });
-    const [error, setError] = useState(null);
+    const [error] = useState(null);
 
     // Cuando cambia un campo, actualiza el estado de la reserva
     const handleChange = (e) => {
@@ -26,7 +26,11 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
 
     const handleAgregarReserva = () => {
         if (!nuevaReserva.fecha || !nuevaReserva.hora || !nuevaReserva.telefono || !nuevaReserva.nombre_contacto || !nuevaReserva.cancha_id) {
-            setError("Todos los campos son obligatorios.");
+            toaster.error({
+                title: "Todos los campos son obligatorios.",
+                status: "error",
+                duration: 3000,
+            });
             return;
         }
         axios
@@ -48,7 +52,6 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
                     status: "success",
                     duration: 3000,
                 })
-                setError(null);
             })
             .catch((error) => {
                 if (error.response && error.response.status === 500) {

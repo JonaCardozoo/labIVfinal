@@ -35,7 +35,7 @@ function Canchas() {
                         {canchas.map((canchas) => (
                             <Table.Row key={canchas.id}>
                                 <Table.Cell>{canchas.nombre}</Table.Cell>
-                                <Table.Cell>{canchas.techada ? "Es techada" : "No es techada"}</Table.Cell>
+                                <Table.Cell>{canchas.techada ? "Si" : "No"}</Table.Cell>
                                 <Table.Cell>
                                 </Table.Cell>
                             </Table.Row>

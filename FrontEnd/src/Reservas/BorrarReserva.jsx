@@ -8,13 +8,17 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
     const [borrarReserva, setBorrarReserva] = useState({
         reserva_id: 0
     });
-    const [error, setError] = useState(null);
+    const [error] = useState(null);
 
     const handleBorrarReserva = () => {
         const { reserva_id } = borrarReserva;
 
         if (!reserva_id) {
-            setError("Todos los campos son obligatorios.");
+            toaster.error({
+                title: "Todos los campos son obligatorios.",
+                status: "error",
+                duration: 3000,
+            });
             return;
         }
 
@@ -26,7 +30,6 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
                     prev.filter((reserva) => reserva.id !== reserva_id)
                 );
                 setMostrarFormularioEliminar(false);
-                setError(null);
             })
             .catch((error) => {
                 if (error.response && error.response.status === 404) {
@@ -76,9 +79,6 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
             <Flex justifyContent="center" mt={4}>
                 <Button colorScheme="blue" onClick={handleBorrarReserva}>
                     Borrar Reserva
-                </Button>
-                <Button ml={4} onClick={() => setMostrarFormularioEliminar(false)}>
-                    Cancelar
                 </Button>
             </Flex>
         </div>
