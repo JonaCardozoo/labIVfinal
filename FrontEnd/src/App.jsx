@@ -4,6 +4,7 @@ import Home from "./Home";
 import Canchas from "./Canchas/Canchas";
 import Navbar from "./NavBar";
 import Reservas from "./Reservas/Reservas";
+import { Toaster } from "./components/ui/toaster"
 function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/canchas" element={<Canchas />} />
         <Route path="/reservas" element={<Reservas />} />
       </Routes>
+      <Toaster />
     </Router>
 
   );

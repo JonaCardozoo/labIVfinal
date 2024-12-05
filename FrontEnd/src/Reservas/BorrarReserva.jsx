@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
+import { toaster } from "../components/ui/toaster";
 
 function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
     const [borrarReserva, setBorrarReserva] = useState({
@@ -20,7 +21,7 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
         // Llamada a la API
         axios
             .delete(`http://localhost:8000/reservas/${reserva_id}`)
-            .then((response) => {
+            .then(() => {
                 setReservas((prev) =>
                     prev.filter((reserva) => reserva.id !== reserva_id)
                 );
@@ -29,9 +30,19 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
             })
             .catch((error) => {
                 if (error.response && error.response.status === 404) {
-                    setError("Hubo un error al borrar la reserva.");
+                    toaster.error({
+                        title: "Reserva no encontrada.",
+                        status: "error",
+                        duration: 3000,
+                    });
                 }
             });
+
+        toaster.success({
+            title: "Reserva borrada con exito",
+            status: "success",
+            duration: 3000,
+        });
     };
 
     return (

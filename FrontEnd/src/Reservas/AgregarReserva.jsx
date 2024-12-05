@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
+import { toaster } from "../components/ui/toaster";
 
 function AgregarReserva({ setReservas, setMostrarFormulario }) {
     const [nuevaReserva, setNuevaReserva] = useState({
@@ -32,7 +33,7 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
             .post("http://localhost:8000/reservas", nuevaReserva)
             .then((response) => {
                 // Actualizar el estado de reservas para agregar la nueva reserva
-                setReservas((prev) => [...prev, response.data]);
+                setReservas((prev) => [...prev, response.data.reserva]);
                 setMostrarFormulario(false);
                 setNuevaReserva({
                     fecha: "",
@@ -42,13 +43,26 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
                     nombre_contacto: "",
                     cancha_id: ""
                 });
+                toaster.success({
+                    title: "Reserva agregada con exito",
+                    status: "success",
+                    duration: 3000,
+                })
                 setError(null);
             })
             .catch((error) => {
                 if (error.response && error.response.status === 500) {
-                    setError("Ya existe una reserva en esa cancha para ese horario.");
+                    toaster.error({
+                        title: "Ya existe una reserva en esa cancha para ese horario.",
+                        status: "error",
+                        duration: 3000,
+                    })
                 } else {
-                    setError("Hubo un error al agregar la reserva.");
+                    toaster.error({
+                        title: "Hubo un error al agregar la reserva.",
+                        status: "error",
+                        duration: 3000,
+                    })
                 }
             });
     };

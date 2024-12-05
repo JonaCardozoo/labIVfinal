@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
 import { Checkbox } from "../components/ui/checkbox";
+import { toaster } from "../components/ui/toaster"
 
 function AgregarCancha({ setCanchas, setMostrarFormulario }) {
     const [nuevaCancha, setNuevaCancha] = useState({
@@ -19,6 +20,8 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
         }));
     };
 
+
+
     const handleAgregarCancha = () => {
         if (!nuevaCancha.nombre) {
             setError("El nombre de la cancha es obligatorio.");
@@ -29,6 +32,13 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
             return;
         }
 
+        toaster.success({
+            title: "Cancha agregada",
+            status: "success",
+            duration: 3000,
+        })
+
+
         axios
             .post("http://localhost:8000/canchas", nuevaCancha)
             .then((response) => {
@@ -38,10 +48,11 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
                     nombre: "",
                     techada: null,
                 });
+
                 setError(null);
             })
             .catch((error) => {
-                console.error("Error al agregar cancha:", error); // Imprime el error completo en la consola
+                console.error("Error al agregar cancha:", error);
 
                 if (error.response) {
                     console.log("Datos de respuesta del error:", error.response.data);

@@ -4,6 +4,7 @@ import { Text } from "@chakra-ui/react"
 import { Table } from "@chakra-ui/react"
 import { Button, Flex } from "@chakra-ui/react"
 import AgregarCancha from "./AgregarCancha";
+import { toaster } from "../components/ui/toaster"
 
 function Canchas() {
     const [canchas, setCanchas] = useState([]);
@@ -43,9 +44,11 @@ function Canchas() {
                 </Table.Root>
                 <Flex direction={"row"} justifyContent={"center"} align="center" m={10} gap={5}>
 
+
                     <Button onClick={() => setMostrarFormularioAgregar(!mostrarFormularioAgregar)}>
                         {mostrarFormularioAgregar ? "Cancelar" : "Agregar Cancha"}
                     </Button>
+
                     {mostrarFormularioAgregar && <AgregarCancha setCanchas={setCanchas} setMostrarFormulario={setMostrarFormularioAgregar} />}
                 </Flex>
             </Flex>

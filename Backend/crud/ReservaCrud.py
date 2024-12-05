@@ -17,10 +17,13 @@ def get_reserva_id(db: Session, reserva_id: int):
 
 def create_reserva(db: Session, reserva: ReservaCreate):
 
-
+    if(reserva.duracion <= 0):
+        raise ValueError("La duración no puede ser negativa.")
+    
     if verificar_reserva(db, reserva):
         raise ValueError("Ya existe una reserva en esa cancha para ese horario.")
 
+   
 
     db_reserva = Reserva(
         cancha_id=reserva.cancha_id,
@@ -81,6 +84,8 @@ def verificar_reserva(db: Session, reserva: ReservaCreate):
     inicio_minutos = reserva.hora.hour * 60 + reserva.hora.minute
     fin_minutos = inicio_minutos + reserva.duracion * 60
 
+    
+
     existing_reserva = db.query(Reserva).filter(
         Reserva.cancha_id == reserva.cancha_id,
         Reserva.fecha == reserva.fecha,
@@ -93,6 +98,8 @@ def verificar_reserva(db: Session, reserva: ReservaCreate):
     ).first()
 
     return existing_reserva
+
+
 
     
     

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
+import { toaster } from "../components/ui/toaster";
 
 function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
     const [modificarReserva, setModificarReserva] = useState({
@@ -44,13 +45,32 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
             })
             .catch((error) => {
                 if (error.response && error.response.status === 500) {
-                    setError("Ya existe una reserva en esa cancha para ese horario.");
+                    toaster.error({
+                        title: "Ya existe una reserva en esa cancha para ese horario.",
+                        status: "error",
+                        duration: 3000,
+                    });
                 } else if (error.response && error.response.status === 404) {
-                    setError("Reserva no encontrada.");
-                } else {
-                    setError("Ya existe una reserva en esa cancha para ese horario.");
+                    toaster.error({
+                        title: "Reserva no encontrada.",
+                        status: "error",
+                        duration: 3000,
+                    });
                 }
             });
+
+        toaster.success({
+            title: "Reserva modificada con exito",
+            status: "success",
+            duration: 3000,
+        });
+
+        cancha_id = "";
+        fecha = "";
+        hora = "";
+        duracion = 0;
+        telefono = "";
+        nombre_contacto = "";
     };
 
     return (
