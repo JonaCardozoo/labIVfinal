@@ -14,6 +14,7 @@ function Canchas() {
             .get("http://localhost:8000/canchas")
             .then((response) => {
                 setCanchas(response.data);
+
             })
             .catch((error) => {
                 console.log(error);

@@ -52,6 +52,3 @@ def create_cancha_route(canchas: CanchaCreate, db: Session = Depends(get_db)):
 router.delete("/canchas/{cancha_id}", response_model=Cancha)
 def delete_cancha_route(cancha_id: int, db: Session = Depends(get_db)):
     return delete_cancha(db, cancha_id)
-
-
-

@@ -3,23 +3,30 @@ import axios from "axios";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
 import { Checkbox } from "../components/ui/checkbox";
-import { toaster } from "../components/ui/toaster"
+import { toaster } from "../components/ui/toaster";
+import { Radio, RadioGroup } from "../components/ui/radio";
 
 function AgregarCancha({ setCanchas, setMostrarFormulario }) {
     const [nuevaCancha, setNuevaCancha] = useState({
-        id: 0,
+        id: null,
         nombre: "",
-        techada: null, //para representar que no se ha seleccionado una opción
+        techada: null,
     });
-    const [error] = useState(null);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setNuevaCancha((prev) => ({
+            ...prev,
+            [name]: name === "id" ? parseInt(value) : value,
+        }));
+    };
 
     const handleCheckboxChange = (techadaValue) => {
         setNuevaCancha((prev) => ({
             ...prev,
-            techada: techadaValue,
+            techada: prev.techada === techadaValue ? null : techadaValue,
         }));
     };
-
 
     const handleAgregarCancha = () => {
         if (!nuevaCancha.nombre) {
@@ -39,109 +46,75 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
             return;
         }
 
-
-
-
         axios
             .post("http://localhost:8000/canchas", nuevaCancha)
             .then((response) => {
-                setCanchas((prev) => [...prev, response.data]);
+                setCanchas((prev) => [...prev, response.data.cancha]);
                 setMostrarFormulario(false);
-                setNuevaCancha({
-                    nombre: "",
-                    techada: null,
-                });
+                setNuevaCancha({ id: null, nombre: "", techada: null });
 
                 toaster.success({
                     title: "Cancha agregada",
                     status: "success",
                     duration: 3000,
-                })
+                });
             })
             .catch((error) => {
-                console.error("Error al agregar cancha:", error);
-
-                if (error.response) {
-                    console.log("Datos de respuesta del error:", error.response.data);
-                    if (error.response.status === 500) {
-                        toaster.error({
-                            title: "Ya existe una cancha con ese nombre.",
-                            status: "error",
-                            duration: 3000,
-                        });
-                    } else {
-                        toaster.error({
-                            title: `Error: ${error.response.data.message || "No se pudo agregar la cancha."}`,
-                            status: "error",
-                            duration: 3000,
-                        });
-                    }
-                } else {
-                    toaster.error({
-                        title: "Hubo un error al agregar la cancha.",
-                        status: "error",
-                        duration: 3000,
-                    })
-                }
-
-
+                const errorMessage =
+                    error.response?.data?.message || "Ya existe una cancha con ese nombre.";
+                toaster.error({
+                    title: `Error: ${errorMessage}`,
+                    status: "error",
+                    duration: 3000,
+                });
             });
-
     };
 
     return (
         <Flex direction="column" align="center" mt={5}>
-            <Field invalid={error}>
-                <Field invalid={error}>
-                    <Text>Numero de cancha</Text>
-                    <Input
-                        type="number"
-                        name="numero"
-                        value={nuevaCancha.id}
-                        onChange={(e) =>
-                            setNuevaCancha((prev) => ({
-                                ...prev,
-                                id: parseInt(e.target.value),
-                            }))
-                        }
-                        placeholder="Número de la cancha"
-                    />
-                </Field>
+            <Field>
+                <Text>Número de cancha</Text>
+                <Input
+                    type="number"
+                    name="id"
+                    value={nuevaCancha.id || ""}
+                    onChange={handleChange}
+                    placeholder="Número de la cancha"
+                />
+            </Field>
+            <Field>
                 <Text>Nombre</Text>
                 <Input
                     type="text"
                     name="nombre"
                     value={nuevaCancha.nombre}
+                    onChange={handleChange}
                     placeholder="Nombre de la cancha"
-                    onChange={(e) =>
-                        setNuevaCancha((prev) => ({
-                            ...prev, //Copia el objeto anterior
-                            nombre: e.target.value, //Asigna el valor al campo actualizado
-                        }))
-                    }
                 />
             </Field>
-            <Flex direction="row" gap={5} mt={4}>
-                <Checkbox
-                    label="Es techada"
-                    checked={nuevaCancha.techada === true}
-                    onChange={() => handleCheckboxChange(true)}
-                >
-                    Es techada
-                </Checkbox>
-                <Checkbox
-                    label="No es techada"
-                    checked={nuevaCancha.techada === false}
-                    onChange={() => handleCheckboxChange(false)}
-                >
-                    No es techada
-                </Checkbox>
-            </Flex>
+            <RadioGroup>
+                <Flex direction="row" gap={5} mt={4}>
+                    <Text>Techada</Text>
+                    <Radio
+                        name="techada"
+                        value="true"
+                        checked={nuevaCancha.techada === true}
+                        onChange={() => handleCheckboxChange(true)}
+                    ></Radio>
+                    <Text>No es techada</Text>
+                    <Radio
+                        name="techada"
+                        value="false"
+                        checked={nuevaCancha.techada === false}
+                        onChange={() => handleCheckboxChange(false)}
+                    ></Radio>
+                </Flex>
+            </RadioGroup>
+
 
             <Button onClick={handleAgregarCancha} mt={4}>
                 Agregar Cancha
             </Button>
-            {error && <Text color="red.500" mt={2}>{error}</Text>}
         </Flex>
     );
 }

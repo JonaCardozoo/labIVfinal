@@ -32,8 +32,8 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
         axios
             .put(`http://localhost:8000/reservas/${reserva_id}`, {
                 cancha_id,
-                fecha,
                 hora: modificarReserva.hora,
+                fecha,
                 duracion,
                 telefono,
                 nombre_contacto,
@@ -41,9 +41,14 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
             .then((response) => {
                 setReservas((prev) =>
                     prev.map((reserva) =>
-                        reserva.id === reserva_id ? response.data : reserva
+                        reserva.id === reserva_id ? response.data.reserva : reserva
                     )
                 );
+                toaster.success({
+                    title: "Reserva modificada con exito",
+                    status: "success",
+                    duration: 3000,
+                });
                 setMostrarFormularioModificar(false);
             })
             .catch((error) => {
@@ -61,22 +66,6 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
                     });
                 }
             });
-
-        toaster.success({
-            title: "Reserva modificada con exito",
-            status: "success",
-            duration: 3000,
-        });
-
-        setReservas({
-            reserva_id: 0,
-            cancha_id: 0,
-            fecha: "",
-            hora: "",
-            duracion: 0,
-            telefono: "",
-            nombre_contacto: "",
-        });
     };
 
     return (

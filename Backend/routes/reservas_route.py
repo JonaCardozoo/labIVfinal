@@ -55,7 +55,7 @@ def create_reserva_route(reserva: ReservaCreate, db: Session = Depends(get_db)):
 def delete_reserva_route(reserva_id: int, db: Session = Depends(get_db)):
     return delete_reserva(db, reserva_id)
 
-@router.put("/reservas/{reserva_id}", response_model=Reserva)
+@router.put("/reservas/{reserva_id}")
 def modifiy_reserva_route(reserva_id: int, reserva: ReservaCreate, db: Session = Depends(get_db)):
     try:
         existing_reserva = verificar_reserva(db, reserva)
