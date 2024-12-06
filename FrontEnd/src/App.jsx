@@ -5,6 +5,7 @@ import Canchas from "./Canchas/Canchas";
 import Navbar from "./NavBar";
 import Reservas from "./Reservas/Reservas";
 import { Toaster } from "./components/ui/toaster"
+import './index.css'
 function App() {
   return (
     <Router>

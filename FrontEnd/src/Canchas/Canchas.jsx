@@ -4,7 +4,6 @@ import { Text } from "@chakra-ui/react"
 import { Table } from "@chakra-ui/react"
 import { Button, Flex } from "@chakra-ui/react"
 import AgregarCancha from "./AgregarCancha";
-import { toaster } from "../components/ui/toaster"
 
 function Canchas() {
     const [canchas, setCanchas] = useState([]);
@@ -30,6 +29,7 @@ function Canchas() {
                         <Table.Row>
                             <Table.ColumnHeader>Nombre</Table.ColumnHeader>
                             <Table.ColumnHeader>techada</Table.ColumnHeader>
+                            <Table.ColumnHeader>id</Table.ColumnHeader>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -37,6 +37,7 @@ function Canchas() {
                             <Table.Row key={canchas.id}>
                                 <Table.Cell>{canchas.nombre}</Table.Cell>
                                 <Table.Cell>{canchas.techada ? "Si" : "No"}</Table.Cell>
+                                <Table.Cell>{canchas.id}</Table.Cell>
                                 <Table.Cell>
                                 </Table.Cell>
                             </Table.Row>

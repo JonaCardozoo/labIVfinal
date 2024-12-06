@@ -1,8 +1,9 @@
+from datetime import date
 from fastapi import APIRouter, Depends, HTTPException,status
 from sqlalchemy.orm import Session
 from app.db.session import SessionLocal
 from schemas.Reservas import ReservaCreate, Reserva
-from crud.ReservaCrud import delete_reserva,modify_reserva,get_reserva_id,get_reserva,create_reserva, verificar_reserva
+from crud.ReservaCrud import delete_reserva,modify_reserva,get_reserva_id,get_reserva,create_reserva, verificar_reserva,filtrar_reserva
 
 
 router = APIRouter()
@@ -23,6 +24,12 @@ def read_reservas_route(db: Session = Depends(get_db)):
 @router.get("/reservas/{reserva_id}", response_model=Reserva)
 def read_reserva_route(reserva_id: int, db: Session = Depends(get_db)):
     return get_reserva_id(db, reserva_id)
+
+@router.get("/reservas/{cancha_id}/{fecha}")
+def filtrar_reserva_route(cancha_id: int, fecha: date, db: Session = Depends(get_db)):
+    return filtrar_reserva(db,cancha_id,fecha)
+
+
 
 @router.post("/reservas/")
 def create_reserva_route(reserva: ReservaCreate, db: Session = Depends(get_db)):

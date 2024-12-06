@@ -25,29 +25,27 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
     };
 
     const handleAgregarReserva = () => {
-        if (!nuevaReserva.fecha || !nuevaReserva.hora || !nuevaReserva.telefono || !nuevaReserva.nombre_contacto || !nuevaReserva.cancha_id) {
+        if (!nuevaReserva.fecha || !nuevaReserva.hora || !nuevaReserva.duracion || !nuevaReserva.telefono || !nuevaReserva.nombre_contacto || !nuevaReserva.cancha_id) {
             toaster.error({
                 title: "Todos los campos son obligatorios.",
                 status: "error",
                 duration: 3000,
             });
-
             return;
         }
 
-
-        if (nuevaReserva.duracion <= 0 | nuevaReserva.duracion > 3) {
+        if (nuevaReserva.duracion <= 0 || nuevaReserva.duracion > 3) {
             toaster.error({
-                title: "La duración tiene que ser mayor a 0 y maximo de 3 horas.",
+                title: "La duración tiene que ser mayor a 0 y máximo de 3 horas.",
                 status: "error",
                 duration: 3000,
             });
             return;
         }
+
         axios
             .post("http://localhost:8000/reservas", nuevaReserva)
             .then((response) => {
-                // Actualizar el estado de reservas para agregar la nueva reserva
                 setReservas((prev) => [...prev, response.data.reserva]);
                 setMostrarFormulario(false);
                 setNuevaReserva({
@@ -59,10 +57,10 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
                     cancha_id: ""
                 });
                 toaster.success({
-                    title: "Reserva agregada con exito",
+                    title: "Reserva agregada con éxito",
                     status: "success",
                     duration: 3000,
-                })
+                });
             })
             .catch((error) => {
                 if (error.response && error.response.status === 500) {
@@ -70,16 +68,17 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
                         title: "Ya existe una reserva en esa cancha para ese horario.",
                         status: "error",
                         duration: 3000,
-                    })
+                    });
                 } else {
                     toaster.error({
                         title: "Hubo un error al agregar la reserva.",
                         status: "error",
                         duration: 3000,
-                    })
+                    });
                 }
             });
     };
+
 
     return (
         <Flex direction="column" align="center" mt={5}>

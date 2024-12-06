@@ -22,10 +22,6 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
             return;
         }
 
-
-
-
-        // Llamada a la API
         axios
             .delete(`http://localhost:8000/reservas/${reserva_id}`)
             .then(() => {

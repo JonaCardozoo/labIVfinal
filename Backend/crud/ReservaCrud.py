@@ -1,4 +1,5 @@
 # crud/reserva.py
+from datetime import date
 from sqlalchemy import and_, extract, or_
 from sqlalchemy.orm import Session
 from models.reserva import Reserva
@@ -95,6 +96,11 @@ def verificar_reserva(db: Session, reserva: ReservaCreate):
     ).first()
 
     return existing_reserva
+
+
+def filtrar_reserva(db:Session, cancha_id:int,fecha:date):
+    db_reservas=db.query(Reserva).filter(Reserva.cancha_id==cancha_id,Reserva.fecha==fecha).all()
+    return db_reservas
 
 
 
