@@ -57,4 +57,27 @@ def delete_reserva_route(reserva_id: int, db: Session = Depends(get_db)):
 
 @router.put("/reservas/{reserva_id}", response_model=Reserva)
 def modifiy_reserva_route(reserva_id: int, reserva: ReservaCreate, db: Session = Depends(get_db)):
-    return modify_reserva(db, reserva_id, reserva) 
+    try:
+        existing_reserva = verificar_reserva(db, reserva)
+        
+        if existing_reserva:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Ya existe una reserva en esa cancha para ese horario."
+            )
+        
+        new_reserva = modify_reserva(db, reserva_id, reserva)
+        return {"message": "Reserva modificada exitosamente", "reserva": new_reserva}
+    
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="La reserva no pudo ser modificada."
+        )

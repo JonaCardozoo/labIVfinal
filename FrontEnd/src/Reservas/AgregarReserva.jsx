@@ -31,6 +31,17 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
                 status: "error",
                 duration: 3000,
             });
+
+            return;
+        }
+
+
+        if (nuevaReserva.duracion <= 0 | nuevaReserva.duracion > 3) {
+            toaster.error({
+                title: "La duración tiene que ser mayor a 0 y maximo de 3 horas.",
+                status: "error",
+                duration: 3000,
+            });
             return;
         }
         axios

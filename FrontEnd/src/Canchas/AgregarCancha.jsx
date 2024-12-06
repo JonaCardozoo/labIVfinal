@@ -11,7 +11,7 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
         nombre: "",
         techada: null, //para representar que no se ha seleccionado una opción
     });
-    const [error, setError] = useState(null);
+    const [error] = useState(null);
 
     const handleCheckboxChange = (techadaValue) => {
         setNuevaCancha((prev) => ({
@@ -21,14 +21,21 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
     };
 
 
-
     const handleAgregarCancha = () => {
         if (!nuevaCancha.nombre) {
-            setError("El nombre de la cancha es obligatorio.");
+            toaster.error({
+                title: "El nombre de la cancha es obligatorio.",
+                status: "error",
+                duration: 3000,
+            });
             return;
         }
         if (nuevaCancha.techada === null) {
-            setError("Debe seleccionar si la cancha es techada o no.");
+            toaster.error({
+                title: "Debe seleccionar si la cancha es techada o no.",
+                status: "error",
+                duration: 3000,
+            });
             return;
         }
 
@@ -50,7 +57,6 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
                     status: "success",
                     duration: 3000,
                 })
-                setError(null);
             })
             .catch((error) => {
                 console.error("Error al agregar cancha:", error);
@@ -58,9 +64,17 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
                 if (error.response) {
                     console.log("Datos de respuesta del error:", error.response.data);
                     if (error.response.status === 500) {
-                        setError("Ya existe una cancha con ese nombre.");
+                        toaster.error({
+                            title: "Ya existe una cancha con ese nombre.",
+                            status: "error",
+                            duration: 3000,
+                        });
                     } else {
-                        setError(`Error: ${error.response.data.message || "No se pudo agregar la cancha."}`);
+                        toaster.error({
+                            title: `Error: ${error.response.data.message || "No se pudo agregar la cancha."}`,
+                            status: "error",
+                            duration: 3000,
+                        });
                     }
                 } else {
                     toaster.error({

@@ -17,12 +17,12 @@ def get_reserva_id(db: Session, reserva_id: int):
 
 def create_reserva(db: Session, reserva: ReservaCreate):
 
-    if(reserva.duracion <= 0):
-        raise ValueError("La duración tiene que ser mayor a 0", detail="Duración inválida")
-    
     if verificar_reserva(db, reserva):
         raise ValueError("Ya existe una reserva en esa cancha para ese horario.", detail="Reserva ya existe")
-
+    
+    if(reserva.duracion <= 0 or reserva.duracion > 3):
+        raise ValueError("La duración tiene que ser mayor a 0 y maximo de 3 horas.")
+    
     db_reserva = Reserva(
         cancha_id=reserva.cancha_id,
         fecha=reserva.fecha,
@@ -59,19 +59,18 @@ def delete_reserva(db: Session, reserva_id: int):
 def modify_reserva(db: Session, reserva_id: int, reserva_data: ReservaCreate):
     
     if verificar_reserva(db, reserva_data):
-        raise ValueError("Ya existe una reserva en esa cancha para ese horario.", detail="Reserva ya existe")
+        raise ValueError("Ya existe una reserva en esa cancha para ese horario.")
     
     reserva = db.query(Reserva).filter(Reserva.id == reserva_id).first()
     if not reserva:
-        raise HTTPException(status_code=404, detail="Reserva no encontrada")
+        raise HTTPException(status_code=404)
 
-
+    reserva.cancha_id = reserva_data.cancha_id
     reserva.fecha = reserva_data.fecha
     reserva.hora = reserva_data.hora
     reserva.duracion = reserva_data.duracion
     reserva.telefono = reserva_data.telefono
     reserva.nombre_contacto = reserva_data.nombre_contacto
-    reserva.cancha_id = reserva_data.cancha_id
    
     db.commit()
     db.refresh(reserva) 

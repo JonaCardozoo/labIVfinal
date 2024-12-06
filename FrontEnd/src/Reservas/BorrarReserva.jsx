@@ -22,6 +22,9 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
             return;
         }
 
+
+
+
         // Llamada a la API
         axios
             .delete(`http://localhost:8000/reservas/${reserva_id}`)
@@ -29,7 +32,16 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
                 setReservas((prev) =>
                     prev.filter((reserva) => reserva.id !== reserva_id)
                 );
+
+                toaster.success({
+                    title: "Reserva borrada con exito",
+                    status: "success",
+                    duration: 3000,
+                });
+
                 setMostrarFormularioEliminar(false);
+
+
             })
             .catch((error) => {
                 if (error.response && error.response.status === 404) {
@@ -40,12 +52,6 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
                     });
                 }
             });
-
-        toaster.success({
-            title: "Reserva borrada con exito",
-            status: "success",
-            duration: 3000,
-        });
     };
 
     return (
