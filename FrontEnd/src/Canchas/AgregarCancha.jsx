@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
-import { Checkbox } from "../components/ui/checkbox";
 import { toaster } from "../components/ui/toaster";
 import { Radio, RadioGroup } from "../components/ui/radio";
 
@@ -112,7 +111,7 @@ function AgregarCancha({ setCanchas, setMostrarFormulario }) {
             </RadioGroup>
 
 
-            <Button onClick={handleAgregarCancha} mt={4}>
+            <Button bg={"white"} color={"black"} onClick={handleAgregarCancha} mt={4}>
                 Agregar Cancha
             </Button>
         </Flex>

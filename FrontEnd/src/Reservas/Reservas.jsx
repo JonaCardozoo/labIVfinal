@@ -8,6 +8,7 @@ import {
     NativeSelectField,
     NativeSelectRoot,
 } from "../components/ui/native-select";
+import "../index.css"
 
 function Reservas() {
     const [reservas, setReservas] = useState([]);
@@ -77,12 +78,12 @@ function Reservas() {
 
     return (
         <div>
-            <Flex direction={"column"} justifyContent={"center"} align="center">
+            <Flex direction={"column"} justifyContent={"center"} align="center" color={"aliceblue"}>
                 <Text textStyle={"6xl"} textAlign={"center"} m={10}>
                     Reservas
                 </Text>
                 <Flex gap={10}>
-                    <NativeSelectRoot gap={4}>
+                    <NativeSelectRoot gap={4} >
                         <Input
                             type="date"
                             value={fechaBusqueda}
@@ -103,14 +104,14 @@ function Reservas() {
                         </NativeSelectField>
                     </NativeSelectRoot>
 
-                    <Button onClick={handleFiltrarReservas}>Filtrar</Button>
-                    <Button onClick={borrarFiltro}>Borrar filtro</Button>
+                    <Button bg={"white"} color={"black"} onClick={handleFiltrarReservas}>Filtrar</Button>
+                    <Button bg={"white"} color={"black"} onClick={borrarFiltro}>Borrar filtro</Button>
                 </Flex>
 
                 {reservasFiltradas && reservasFiltradas.length > 0 ? (
-                    <Table.Root size="sm" width={"40%"} color={"white"}>
+                    <Table.Root size="sm" width={"40%"} color={"aliceblue"}>
                         <Table.Header >
-                            <Table.Row >
+                            <Table.Row>
                                 <Table.ColumnHeader>Fecha</Table.ColumnHeader>
                                 <Table.ColumnHeader>Hora</Table.ColumnHeader>
                                 <Table.ColumnHeader>Duración</Table.ColumnHeader>
@@ -122,7 +123,7 @@ function Reservas() {
                         </Table.Header>
                         <Table.Body >
                             {reservasFiltradas?.map((reserva) => (
-                                <Table.Row key={reserva?.id}>
+                                <Table.Row bg={"black"} key={reserva?.id}>
                                     <Table.Cell>{reserva?.fecha}</Table.Cell>
                                     <Table.Cell>{reserva?.hora}</Table.Cell>
                                     <Table.Cell>{reserva?.duracion}{"hs"}</Table.Cell>

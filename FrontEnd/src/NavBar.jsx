@@ -7,7 +7,9 @@ const Navbar = () => {
     return (
         <Box as="nav" bg="white" boxShadow={"0 0 5px white"} p={4}>
             <Flex align="center" justify="space-between" wrap="wrap">
-                <Image w={"50px"} src='/padel.png'></Image>
+                <Link as={RouterLink} to="/" _hover={{ textDecoration: 'underline' }} color={'black'}>
+                    <Image w={"50px"} src='/padel.png'></Image>
+                </Link>
 
 
                 <Flex gap={6}>

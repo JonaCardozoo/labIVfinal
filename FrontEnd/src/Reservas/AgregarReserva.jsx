@@ -91,6 +91,7 @@ function AgregarReserva({ setReservas, setMostrarFormulario, setReservasFiltrada
                     name="fecha"
                     value={nuevaReserva.fecha}
                     onChange={handleChange}
+
                 />
             </Field>
             <Field invalid={error}>

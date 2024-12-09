@@ -22,7 +22,7 @@ function Canchas() {
 
     return (
         <div>
-            <Flex direction={"column"} justifyContent={"center"} align="center" >
+            <Flex direction={"column"} justifyContent={"center"} align="center" color={"white"} >
                 <Text textStyle={"6xl"} textAlign={"center"} m={10}>Canchas</Text>
                 <Table.Root size="sm" height={100} width={"15%"}>
                     <Table.Header>
@@ -34,7 +34,7 @@ function Canchas() {
                     </Table.Header>
                     <Table.Body>
                         {canchas.map((canchas) => (
-                            <Table.Row key={canchas.id}>
+                            <Table.Row bg={"black"} key={canchas.id}>
                                 <Table.Cell>{canchas.nombre}</Table.Cell>
                                 <Table.Cell>{canchas.techada ? "Si" : "No"}</Table.Cell>
                                 <Table.Cell>{canchas.id}</Table.Cell>
@@ -47,7 +47,7 @@ function Canchas() {
                 <Flex direction={"row"} justifyContent={"center"} align="center" m={10} gap={5}>
 
 
-                    <Button onClick={() => setMostrarFormularioAgregar(!mostrarFormularioAgregar)}>
+                    <Button bg={"white"} color={"black"} onClick={() => setMostrarFormularioAgregar(!mostrarFormularioAgregar)}>
                         {mostrarFormularioAgregar ? "Cancelar" : "Agregar Cancha"}
                     </Button>
 

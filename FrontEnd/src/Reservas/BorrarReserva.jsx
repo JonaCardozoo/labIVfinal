@@ -38,7 +38,6 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
 
                 setMostrarFormularioEliminar(false);
 
-
             })
             .catch((error) => {
                 if (error.response && error.response.status === 404) {
@@ -53,34 +52,37 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
 
     return (
         <div>
-            <Text fontSize="2xl" mb={4}>
-                Borrar Reserva
-            </Text>
+            <Flex direction={"column"} color={"white"} justifyContent={"center"} align={"center"}>
 
-            <Field invalid={error}>
-                <Text>ID de la Reserva</Text>
-                <Input
-                    type="number"
-                    name="reserva_id"
-                    value={borrarReserva.reserva_id}
-                    onChange={(e) =>
-                        setBorrarReserva((prev) => ({
-                            ...prev,
-                            reserva_id: parseInt(e.target.value),
-                        }))
-                    }
-                    placeholder="ID de la Reserva"
-                />
-            </Field>
-
-            {error && (
-                <Text color="red.500" mt={2}>
-                    {error}
+                <Text fontSize="2xl" mb={4}>
+                    Borrar Reserva
                 </Text>
-            )}
+
+                <Field invalid={error}>
+                    <Text>ID de la Reserva</Text>
+                    <Input
+                        type="number"
+                        name="reserva_id"
+                        value={borrarReserva.reserva_id}
+                        onChange={(e) =>
+                            setBorrarReserva((prev) => ({
+                                ...prev,
+                                reserva_id: parseInt(e.target.value),
+                            }))
+                        }
+                        placeholder="ID de la Reserva"
+                    />
+                </Field>
+
+                {error && (
+                    <Text color="red.500" mt={2}>
+                        {error}
+                    </Text>
+                )}
+            </Flex>
 
             <Flex justifyContent="center" mt={4}>
-                <Button colorScheme="blue" onClick={handleBorrarReserva}>
+                <Button bg={"white"} color={"black"} onClick={handleBorrarReserva}>
                     Borrar Reserva
                 </Button>
             </Flex>
