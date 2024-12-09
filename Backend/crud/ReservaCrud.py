@@ -81,7 +81,7 @@ def modify_reserva(db: Session, reserva_id: int, reserva_data: ReservaCreate):
 def verificar_reserva(db: Session, reserva: ReservaCreate):
     inicio_minutos = reserva.hora.hour * 60 + reserva.hora.minute
     fin_minutos = inicio_minutos + reserva.duracion * 60
-
+    
     
 
     existing_reserva = db.query(Reserva).filter(

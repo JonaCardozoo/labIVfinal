@@ -6,12 +6,14 @@ import Navbar from "./NavBar";
 import Reservas from "./Reservas/Reservas";
 import { Toaster } from "./components/ui/toaster"
 import './index.css'
+import NotFound from "./NotFound";
 function App() {
   return (
     <Router>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/canchas" element={<Canchas />} />
         <Route path="/reservas" element={<Reservas />} />
       </Routes>

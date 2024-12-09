@@ -58,7 +58,7 @@ function Reservas() {
         let url = "http://localhost:8000/reservas";
         if (cancha_id && fecha) {
             url += `/${cancha_id}/${fecha}`;
-        } else if (cancha_id) {
+        } else if (cancha_id && cancha_id !== "") {
             url += `/${cancha_id}`;
         } else if (fecha) {
             url += `/fecha/${fecha}`;
