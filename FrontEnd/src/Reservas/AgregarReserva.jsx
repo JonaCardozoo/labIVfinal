@@ -4,14 +4,14 @@ import { Button, Input, Text, Flex } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
 import { toaster } from "../components/ui/toaster";
 
-function AgregarReserva({ setReservas, setMostrarFormulario }) {
+function AgregarReserva({ setReservas, setMostrarFormulario, setReservasFiltradas }) {
     const [nuevaReserva, setNuevaReserva] = useState({
-        fecha: "",
-        hora: "",
-        duracion: "",
-        telefono: "",
-        nombre_contacto: "",
-        cancha_id: ""
+        fecha: "2024-06-12",
+        hora: "23:00",
+        duracion: "1",
+        telefono: "343",
+        nombre_contacto: "jona",
+        cancha_id: "1"
     });
     const [error] = useState(null);
 
@@ -46,8 +46,10 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
         axios
             .post("http://localhost:8000/reservas", nuevaReserva)
             .then((response) => {
-                setReservas((prev) => [...prev, response.data.reserva]);
+                setReservas((prev) => [...prev, nuevaReserva]);
+                setReservasFiltradas((prev) => [...prev, nuevaReserva]);
                 setMostrarFormulario(false);
+
                 setNuevaReserva({
                     fecha: "",
                     hora: "",
@@ -61,6 +63,7 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
                     status: "success",
                     duration: 3000,
                 });
+                window.location.reload();
             })
             .catch((error) => {
                 if (error.response && error.response.status === 500) {
@@ -78,7 +81,6 @@ function AgregarReserva({ setReservas, setMostrarFormulario }) {
                 }
             });
     };
-
 
     return (
         <Flex direction="column" align="center" mt={5}>

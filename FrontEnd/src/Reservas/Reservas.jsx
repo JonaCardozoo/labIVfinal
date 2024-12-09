@@ -63,10 +63,10 @@ function Reservas() {
                 url += `/${canchaBusqueda}/${fechaBusqueda}`;
             } else if (canchaBusqueda) {
                 url += `/${canchaBusqueda}`;
-            } else if (fechaBusqueda) {
-                url += `/fecha/${fechaBusqueda}`;
+                // } else if (fechaBusqueda) {
+                //     url += `/fecha/${fechaBusqueda}`;
+                // }
             }
-
             const response = await axios.get(url);
             setReservasFiltradas(response.data);
         } catch (error) {
@@ -86,13 +86,13 @@ function Reservas() {
                         <Input
                             type="date"
                             value={fechaBusqueda}
-                            onChange={(e) => setFechaBusqueda(e.target.value)}
+                            onChange={(e) => { setFechaBusqueda(e.target.value); console.log(e.target.value) }}
                             placeholder="Fecha"
                         />
                         <NativeSelectField
                             placeholder="Seleccionar Cancha"
                             value={canchaBusqueda}
-                            onChange={(e) => setCanchaBusqueda(e.target.value)}
+                            onChange={(e) => { setCanchaBusqueda(e.target.value); console.log(e.target.value) }}
                             backgroundColor="black"
                         >
                             {canchas.map((cancha) => (
@@ -121,15 +121,15 @@ function Reservas() {
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                            {reservasFiltradas.map((reserva) => (
-                                <Table.Row key={reserva.id}>
-                                    <Table.Cell>{reserva.fecha}</Table.Cell>
-                                    <Table.Cell>{reserva.hora}</Table.Cell>
-                                    <Table.Cell>{reserva.duracion}{"hs"}</Table.Cell>
-                                    <Table.Cell>{reserva.telefono}</Table.Cell>
-                                    <Table.Cell>{reserva.nombre_contacto}</Table.Cell>
-                                    <Table.Cell>{"Nro "}{reserva.cancha_id}</Table.Cell>
-                                    <Table.Cell>{reserva.id}</Table.Cell>
+                            {reservasFiltradas?.map((reserva) => (
+                                <Table.Row key={reserva?.id}>
+                                    <Table.Cell>{reserva?.fecha}</Table.Cell>
+                                    <Table.Cell>{reserva?.hora}</Table.Cell>
+                                    <Table.Cell>{reserva?.duracion}{"hs"}</Table.Cell>
+                                    <Table.Cell>{reserva?.telefono}</Table.Cell>
+                                    <Table.Cell>{reserva?.nombre_contacto}</Table.Cell>
+                                    <Table.Cell>{"Nro "}{reserva?.cancha_id}</Table.Cell>
+                                    <Table.Cell>{reserva?.id}</Table.Cell>
                                 </Table.Row>
                             ))}
                         </Table.Body>
@@ -160,6 +160,7 @@ function Reservas() {
                     <AgregarReserva
                         setReservas={setReservas}
                         setMostrarFormulario={setMostrarFormulario}
+                        setReservasFiltradas={setReservasFiltradas}
                     />
                 )}
             </Flex>
