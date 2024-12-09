@@ -108,9 +108,9 @@ function Reservas() {
                 </Flex>
 
                 {reservasFiltradas && reservasFiltradas.length > 0 ? (
-                    <Table.Root size="sm" width={"40%"}>
-                        <Table.Header>
-                            <Table.Row>
+                    <Table.Root size="sm" width={"40%"} color={"white"}>
+                        <Table.Header >
+                            <Table.Row >
                                 <Table.ColumnHeader>Fecha</Table.ColumnHeader>
                                 <Table.ColumnHeader>Hora</Table.ColumnHeader>
                                 <Table.ColumnHeader>Duración</Table.ColumnHeader>
@@ -120,7 +120,7 @@ function Reservas() {
                                 <Table.ColumnHeader>ID Reserva</Table.ColumnHeader>
                             </Table.Row>
                         </Table.Header>
-                        <Table.Body>
+                        <Table.Body >
                             {reservasFiltradas?.map((reserva) => (
                                 <Table.Row key={reserva?.id}>
                                     <Table.Cell>{reserva?.fecha}</Table.Cell>

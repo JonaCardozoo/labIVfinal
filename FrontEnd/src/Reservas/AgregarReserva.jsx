@@ -6,12 +6,12 @@ import { toaster } from "../components/ui/toaster";
 
 function AgregarReserva({ setReservas, setMostrarFormulario, setReservasFiltradas }) {
     const [nuevaReserva, setNuevaReserva] = useState({
-        fecha: "2024-06-12",
-        hora: "23:00",
-        duracion: "1",
-        telefono: "343",
-        nombre_contacto: "jona",
-        cancha_id: "1"
+        fecha: "",
+        hora: "",
+        duracion: "",
+        telefono: "",
+        nombre_contacto: "",
+        cancha_id: ""
     });
     const [error] = useState(null);
 

@@ -34,6 +34,7 @@ function BorrarReserva({ setReservas, setMostrarFormularioEliminar }) {
                     status: "success",
                     duration: 3000,
                 });
+                window.location.reload();
 
                 setMostrarFormularioEliminar(false);
 
