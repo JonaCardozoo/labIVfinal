@@ -11,7 +11,6 @@ import {
 
 function Reservas() {
     const [reservas, setReservas] = useState([]);
-    const [reservasOriginales, setReservasOriginales] = useState([]);
     const [reservasFiltradas, setReservasFiltradas] = useState([]);
     const [canchas, setCanchas] = useState([]);
     const [fechaBusqueda, setFechaBusqueda] = useState("");
@@ -28,7 +27,7 @@ function Reservas() {
                 setCanchas(response.data);
             })
             .catch((error) => {
-                console.log(error);
+                console.log("Error al cargar las canchas:", error);
             });
     }, []);
 
@@ -38,41 +37,42 @@ function Reservas() {
             .get("http://localhost:8000/reservas")
             .then((response) => {
                 setReservas(response.data);
-                setReservasOriginales(response.data);
-                setReservasFiltradas(response.data);
+                setReservasFiltradas(response.data); // Inicialmente, mostramos todas las reservas
             })
             .catch((error) => {
-                console.log(error);
+                console.log("Error al cargar las reservas:", error);
             });
     }, []);
 
+    const borrarFiltro = () => {
+        setReservasFiltradas(reservas);
+        setFechaBusqueda("");
+        setCanchaBusqueda("");
+    };
+
     // Filtrar reservas
-    const filtrarReservas = (cancha_id, fecha) => {
-        // Si no hay filtros, mostrar todas las reservas originales
-        if (!fecha && !cancha_id) {
-            setReservasFiltradas(reservasOriginales);
+    const handleFiltrarReservas = async () => {
+        if (!fechaBusqueda || !canchaBusqueda) {
+            alert("Por favor, selecciona tanto una fecha como una cancha.");
             return;
         }
 
-        // Construir URL dinámica para la API
-        let url = "http://localhost:8000/reservas";
-        if (cancha_id && fecha) {
-            url += `/${cancha_id}/${fecha}`;
-        } else if (cancha_id && cancha_id !== "") {
-            url += `/${cancha_id}`;
-        } else if (fecha) {
-            url += `/fecha/${fecha}`;
-        }
+        try {
+            let url = "http://localhost:8000/reservas";
+            if (canchaBusqueda && fechaBusqueda) {
+                url += `/${canchaBusqueda}/${fechaBusqueda}`;
+            } else if (canchaBusqueda) {
+                url += `/${canchaBusqueda}`;
+            } else if (fechaBusqueda) {
+                url += `/fecha/${fechaBusqueda}`;
+            }
 
-        // Realizar la solicitud con los filtros
-        axios
-            .get(url)
-            .then((response) => {
-                setReservasFiltradas(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            const response = await axios.get(url);
+            setReservasFiltradas(response.data);
+        } catch (error) {
+            console.error("Error al filtrar reservas:", error);
+            alert("Ocurrió un error al filtrar las reservas. Por favor, inténtalo nuevamente.");
+        }
     };
 
     return (
@@ -86,32 +86,25 @@ function Reservas() {
                         <Input
                             type="date"
                             value={fechaBusqueda}
-                            onChange={(e) => {
-                                const nuevaFecha = e.target.value;
-                                setFechaBusqueda(nuevaFecha);
-                                filtrarReservas(canchaBusqueda, nuevaFecha);
-                            }}
+                            onChange={(e) => setFechaBusqueda(e.target.value)}
                             placeholder="Fecha"
                         />
                         <NativeSelectField
                             placeholder="Seleccionar Cancha"
                             value={canchaBusqueda}
-                            onChange={(e) => {
-                                const nuevaCancha = e.target.value; // "" si se selecciona "Todas las canchas"
-                                setCanchaBusqueda(nuevaCancha);
-                                filtrarReservas(nuevaCancha, fechaBusqueda);
-                            }}
+                            onChange={(e) => setCanchaBusqueda(e.target.value)}
                             backgroundColor="black"
                         >
-                            <option value="">Todas las canchas</option> {/* Esta opción tiene valor "" */}
                             {canchas.map((cancha) => (
                                 <option key={cancha.id} value={cancha.id}>
                                     {cancha.nombre}
                                 </option>
                             ))}
                         </NativeSelectField>
-
                     </NativeSelectRoot>
+
+                    <Button onClick={handleFiltrarReservas}>Filtrar</Button>
+                    <Button onClick={borrarFiltro}>Borrar filtro</Button>
                 </Flex>
 
                 {reservasFiltradas && reservasFiltradas.length > 0 ? (
