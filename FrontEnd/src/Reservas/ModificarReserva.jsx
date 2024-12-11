@@ -49,6 +49,7 @@ function ModificarReserva({ setReservas, setMostrarFormularioModificar }) {
                     status: "success",
                     duration: 3000,
                 });
+                window.location.reload();
                 setMostrarFormularioModificar(false);
             })
             .catch((error) => {

@@ -7,6 +7,7 @@ import Reservas from "./Reservas/Reservas";
 import { Toaster } from "./components/ui/toaster"
 import './index.css'
 import NotFound from "./NotFound";
+import Carousel from "./Carousel";
 function App() {
   return (
     <Router>
@@ -17,7 +18,9 @@ function App() {
         <Route path="/canchas" element={<Canchas />} />
         <Route path="/reservas" element={<Reservas />} />
       </Routes>
+      <Carousel />
       <Toaster />
+
     </Router>
 
   );

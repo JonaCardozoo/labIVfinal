@@ -11,7 +11,6 @@ const Navbar = () => {
                     <Image w={"50px"} src='/padel.png'></Image>
                 </Link>
 
-
                 <Flex gap={6}>
                     <Link as={RouterLink} to="/" _hover={{ textDecoration: 'underline' }} color={'black'} >Inicio</Link>
                     <Link as={RouterLink} to="/canchas" _hover={{ textDecoration: 'underline' }} color={'black'}>Cancha</Link>
