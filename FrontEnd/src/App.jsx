@@ -7,7 +7,6 @@ import Reservas from "./Reservas/Reservas";
 import { Toaster } from "./components/ui/toaster"
 import './index.css'
 import NotFound from "./NotFound";
-import Carousel from "./Carousel";
 function App() {
   return (
     <Router>
