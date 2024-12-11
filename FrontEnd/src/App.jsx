@@ -13,12 +13,13 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />}></Route>
         <Route path="*" element={<NotFound />} />
         <Route path="/canchas" element={<Canchas />} />
         <Route path="/reservas" element={<Reservas />} />
+
       </Routes>
-      <Carousel />
+
       <Toaster />
 
     </Router>

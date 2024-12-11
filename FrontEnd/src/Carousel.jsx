@@ -109,7 +109,7 @@ export default function CaptionCarousel() {
                                 top="50%"
                                 transform="translate(0, -50%)"
                             >
-                                <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
+                                <Heading color={"white"} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
                                     {card.title}
                                 </Heading>
                                 <Text fontSize={{ base: 'md', lg: 'lg' }} color="white" fontWeight="bold">
