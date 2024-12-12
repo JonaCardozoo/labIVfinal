@@ -86,11 +86,6 @@ def verificar_reserva(db: Session, reserva: ReservaCreate):
 
     existing_reserva = db.query(Reserva).filter(
         Reserva.cancha_id == reserva.cancha_id,
-        Reserva.fecha == reserva.fecha,
-        Reserva.hora == reserva.hora,
-        Reserva.duracion == reserva.duracion,
-        Reserva.telefono == reserva.telefono,
-        Reserva.nombre_contacto == reserva.nombre_contacto,
         or_(
             and_(
                 (extract('hour', Reserva.hora) * 60 + extract('minute', Reserva.hora)) < fin_minutos,
