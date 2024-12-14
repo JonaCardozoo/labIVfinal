@@ -52,7 +52,7 @@ export default function CaptionCarousel() {
     ];
 
     return (
-        <Box position={'relative'} height={'600px'} width={'full'} overflow={'hidden'}>
+        <Box position={'relative'} height={'600px'} width={'full'} overflow={'hidden'} marginTop={'30px'} borderRadius={'10px'}>
             <link
                 rel="stylesheet"
                 type="text/css"

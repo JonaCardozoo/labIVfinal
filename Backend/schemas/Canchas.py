@@ -10,6 +10,6 @@ class CanchaCreate(CanchaBase):
 
 class Cancha(CanchaBase):
     id: int
-
+    
     class Config:
         from_attributes = True

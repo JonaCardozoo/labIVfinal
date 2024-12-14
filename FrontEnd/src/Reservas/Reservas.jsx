@@ -9,6 +9,7 @@ import {
     NativeSelectRoot,
 } from "../components/ui/native-select";
 import "../index.css"
+import { toaster } from "../components/ui/toaster";
 
 function Reservas() {
     const [reservas, setReservas] = useState([]);
@@ -54,7 +55,14 @@ function Reservas() {
     // Filtrar reservas
     const handleFiltrarReservas = async () => {
         if (!fechaBusqueda || !canchaBusqueda) {
-            alert("Por favor, selecciona tanto una fecha como una cancha.");
+            toaster.error({
+                title: "Por favor, selecciona tanto una fecha como una cancha.",
+                status: "error",
+                duration: 3000,
+                placement: "bottom-end",
+                isClosable: true,
+                max: 3,
+            });
             return;
         }
 
@@ -64,15 +72,16 @@ function Reservas() {
                 url += `/${canchaBusqueda}/${fechaBusqueda}`;
             } else if (canchaBusqueda) {
                 url += `/${canchaBusqueda}`;
-                // } else if (fechaBusqueda) {
-                //     url += `/fecha/${fechaBusqueda}`;
-                // }
             }
             const response = await axios.get(url);
             setReservasFiltradas(response.data);
         } catch (error) {
             console.error("Error al filtrar reservas:", error);
-            alert("Ocurrió un error al filtrar las reservas. Por favor, inténtalo nuevamente.");
+            toaster.error({
+                title: "Ocurrió un error al filtrar las reservas. Por favor, inténtalo nuevamente.",
+                status: "error",
+                duration: 3000,
+            });
         }
     };
 
@@ -82,19 +91,21 @@ function Reservas() {
                 <Text textStyle={"6xl"} textAlign={"center"} m={10}>
                     Reservas
                 </Text>
-                <Flex gap={10}>
-                    <NativeSelectRoot gap={4} >
+                <Flex gap={10} p={5}>
+                    <NativeSelectRoot gap={5} >
                         <Input
                             type="date"
                             value={fechaBusqueda}
                             onChange={(e) => { setFechaBusqueda(e.target.value); console.log(e.target.value) }}
                             placeholder="Fecha"
+                            borderColor={"black"}
                         />
                         <NativeSelectField
                             placeholder="Seleccionar Cancha"
                             value={canchaBusqueda}
                             onChange={(e) => { setCanchaBusqueda(e.target.value); console.log(e.target.value) }}
-                            backgroundColor="black"
+                            backgroundColor="transparent"
+                            borderColor="black"
                         >
                             {canchas.map((cancha) => (
                                 <option key={cancha.id} value={cancha.id}>
@@ -123,7 +134,7 @@ function Reservas() {
                         </Table.Header>
                         <Table.Body >
                             {reservasFiltradas?.map((reserva) => (
-                                <Table.Row bg={"black"} key={reserva?.id}>
+                                <Table.Row bg={"transparent"} key={reserva?.id}>
                                     <Table.Cell>{reserva?.fecha}</Table.Cell>
                                     <Table.Cell>{reserva?.hora}</Table.Cell>
                                     <Table.Cell>{reserva?.duracion}{"hs"}</Table.Cell>

@@ -24,26 +24,27 @@ function Canchas() {
         <div>
             <Flex direction={"column"} justifyContent={"center"} align="center" color={"white"} >
                 <Text textStyle={"6xl"} textAlign={"center"} m={10}>Canchas</Text>
-                <Table.Root size="sm" height={100} width={"15%"}>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.ColumnHeader>Nombre</Table.ColumnHeader>
-                            <Table.ColumnHeader>techada</Table.ColumnHeader>
-                            <Table.ColumnHeader>id</Table.ColumnHeader>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        {canchas.map((canchas) => (
-                            <Table.Row bg={"black"} key={canchas.id}>
-                                <Table.Cell>{canchas.nombre}</Table.Cell>
-                                <Table.Cell>{canchas.techada ? "Si" : "No"}</Table.Cell>
-                                <Table.Cell>{canchas.id}</Table.Cell>
-                                <Table.Cell>
-                                </Table.Cell>
+                <Table.ScrollArea borderWidth="2px" rounded="md" height="300px" width={"100%"} overflowX={"auto"}>
+                    <Table.Root size="sm" stickyHeader>
+                        <Table.Header>
+                            <Table.Row bg="bg.subtle">
+                                <Table.ColumnHeader >Nombre</Table.ColumnHeader>
+                                <Table.ColumnHeader >Techada</Table.ColumnHeader>
+                                <Table.ColumnHeader textAlign={"center"}>ID</Table.ColumnHeader>
                             </Table.Row>
-                        ))}
-                    </Table.Body>
-                </Table.Root>
+                        </Table.Header>
+
+                        <Table.Body>
+                            {canchas.map((canchas) => (
+                                <Table.Row key={canchas.id}>
+                                    <Table.Cell >{canchas.nombre}</Table.Cell>
+                                    <Table.Cell >{canchas.techada ? "Si" : "No"}</Table.Cell>
+                                    <Table.Cell textAlign={"center"}>{canchas.id}</Table.Cell>
+                                </Table.Row>
+                            ))}
+                        </Table.Body>
+                    </Table.Root>
+                </Table.ScrollArea>
                 <Flex direction={"row"} justifyContent={"center"} align="center" m={10} gap={5}>
 
 

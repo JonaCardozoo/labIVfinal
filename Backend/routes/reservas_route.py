@@ -60,7 +60,20 @@ def create_reserva_route(reserva: ReservaCreate, db: Session = Depends(get_db)):
 
 @router.delete("/reservas/{reserva_id}", response_model=Reserva)
 def delete_reserva_route(reserva_id: int, db: Session = Depends(get_db)):
-    return delete_reserva(db, reserva_id)
+        borrar_reserva = delete_reserva(db, reserva_id)
+        
+        if borrar_reserva:
+            raise HTTPException(
+                status_code=status.HTTP_200_OK,
+                detail="Reserva borrada con éxito"
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="No se pudo borrar la reserva"
+            )
+    
+
 
 @router.put("/reservas/{reserva_id}")
 def modifiy_reserva_route(reserva_id: int, reserva: ReservaCreate, db: Session = Depends(get_db)):

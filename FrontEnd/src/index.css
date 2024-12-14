@@ -1,7 +1,25 @@
-:root {
-    background-color: #0a0a0c;
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Darker+Grotesque:wght@300..900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lilita+One&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+
 }
 
-.custom-table-body {
-    background-color: #5252bc;
+:root {
+    background: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120, 119, 198, 0.3), rgba(255, 255, 255, 0));
+}
+
+
+a {
+    color: rgb(255, 255, 255);
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease-in-out;
+    font-size: 20px;
+    text-decoration: none;
+
+}
+
+a:hover {
+    color: rgb(255, 255, 255);
+    transform: scale(1.1);
 }
